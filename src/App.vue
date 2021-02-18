@@ -1,30 +1,30 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-01 19:51:18
+ * @LastEditTime: 2021-02-17 16:15:31
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\App.vue
+-->
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="app">
+    <router-view/>
+    <main-tab-bar/>
   </div>
-  <router-view/>
 </template>
 
+<script>
+  import MainTabBar from 'components/content/mainTabBar/MainTabBar.vue'
+  
+  export default {
+    name: 'app',
+    components: {
+      MainTabBar:  MainTabBar
+    }
+  }
+
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  @import "./assets/css/base.css";
 </style>
