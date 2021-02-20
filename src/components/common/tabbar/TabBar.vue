@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-02-16 16:24:57
+ * @LastEditTime: 2021-02-20 20:05:23
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\common\tabbar\TabBar.vue
+-->
 <template>
   <div id="tab-bar">
     <slot></slot>

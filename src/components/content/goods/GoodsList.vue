@@ -1,12 +1,11 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-19 15:14:06
- * @LastEditTime: 2021-02-20 17:28:07
- * @LastEditors: your name
+ * @LastEditTime: 2021-02-20 20:59:50
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\goods\GoodsList.vue
 -->
-//GoodsList
 <template>
   <div class="goods">
     <!-- ul>li{商品列表$}*10 -->

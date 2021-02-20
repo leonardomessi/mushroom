@@ -2,7 +2,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-19 15:16:13
- * @LastEditTime: 2021-02-20 17:41:24
+ * @LastEditTime: 2021-02-20 21:28:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\goods\GoodsListItem.vue
@@ -23,9 +23,6 @@
 <script>
 export default {
   name: "GoodsListItem",
-  components: {
-    
-  },
   props: {
     goodsItem: {
       type: Object,
