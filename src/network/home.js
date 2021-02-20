@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-02-17 17:11:14
- * @LastEditTime: 2021-02-17 17:26:24
+ * @LastEditTime: 2021-02-19 15:12:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\network\home.js
@@ -14,5 +14,15 @@ import {request} from "./request";
 export function getHomeMultidata() {
   return request({
     url: '/home/multidata'
+  })
+}
+
+export function getHomeGoods(type, page) {
+  return request({
+    url: '/home/data',
+    params: {
+      type,
+      page
+    }
   })
 }
