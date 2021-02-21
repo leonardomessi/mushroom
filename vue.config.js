@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2021-02-17 10:19:18
- * @LastEditTime: 2021-02-17 17:25:12
- * @LastEditors: your name
+ * @LastEditTime: 2021-02-21 17:23:26
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\vue.config.js
  */

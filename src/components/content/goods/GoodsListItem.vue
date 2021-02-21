@@ -2,7 +2,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-19 15:16:13
- * @LastEditTime: 2021-02-20 21:28:05
+ * @LastEditTime: 2021-02-21 15:25:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\goods\GoodsListItem.vue
@@ -75,8 +75,12 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     /* 规定段落中的文本不进行换行 */
-    white-space: nowrap;
-    margin-bottom: 20%;
+    /* white-space: nowrap; */
+    /* 规定段落中的超出两行省略*/
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* 这里是超出几行省略 */
+    margin-bottom: 10%;
   }
 
   .goods-info .price {
