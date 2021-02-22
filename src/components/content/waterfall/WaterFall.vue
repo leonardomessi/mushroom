@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-20 17:29:59
- * @LastEditTime: 2021-02-21 19:20:29
+ * @LastEditTime: 2021-02-22 15:31:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\waterfall\WaterFall.vue
@@ -9,10 +9,10 @@
 
 <template>
   <div class="water-fall">
-    <el-button class="test-btn" icon="el-icon-edit" type="success" 
+    <!-- <el-button class="test-btn" icon="el-icon-edit" type="success" 
       @click="setImgPos()"> 
       模块测试按钮 
-    </el-button>
+    </el-button> -->
     <box-item v-for="item in goods" :key="item">
       <!-- 具名插槽简写 -->
       <template #item-img>
@@ -28,6 +28,7 @@
         </div>
       </template>
     </box-item>
+
   </div>
 </template>
 
@@ -63,9 +64,10 @@ export default {
       // offsetWidth可以直接获得
       let waterFallWidth = waterFall.offsetWidth;
       let boxWidth = boxItems[0].offsetWidth;
-      
       let boxGap = ((waterFallWidth - (colNums*boxWidth))/(colNums + 1));
-      console.log(boxWidth,waterFallWidth, boxGap);
+
+      console.log(boxItems[0].parentNode); // 还是waterfall ，塌缩了 
+
       // value of  |   key in
       // key 的类型是 string，不是number
       for (let key = 0, item; key < boxItemsLen; key++) {
@@ -79,11 +81,18 @@ export default {
             item.style.left = boxWidth + boxGap * (key+1) +"px";
           }
         }
-        // 2. 找最小值
-        
+        // 2. 其他行定位
+        else {
+          // 水平定位
+          let minIdx = this.getMinIdx(heightArr);
+          // 当前的left 上一行最矮的那个
+          item.style.left = boxItems[minIdx].offsetLeft + 'px';
+          item.style.top = (heightArr[minIdx] + 10) + 'px';
+          heightArr[minIdx] += item.offsetHeight + 10;
+        }
       }
-      console.log(heightArr);
-      this.getMinIdx(heightArr);
+      // 由于绝对定位，父元素waterfall塌缩，要设置一下高度，否则没有背景
+      waterFall.style.height = Math.max(...heightArr) + "px";
     },
     randomInteger(min, max) {
       let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -102,15 +111,17 @@ export default {
         itemImg.style.overflow = "hidden";
       }
     },
+    // 找arr里最小数的下标
     getMinIdx(arr) {
       // call()，能够使用属于另一个对象的方法
       // [] 这里实际上就是new Arrar()
-      console.log([].indexOf.call(arr, Math.min(...arr)));
+      return [].indexOf.call(arr, Math.min(...arr));
     }
   },
   // dom刷新后调用
   updated() {
     this.setRandomHeight();
+    this.setImgPos();
   },
 };
 </script>
@@ -119,6 +130,7 @@ export default {
 .water-fall {
   position: relative;
   text-align:center;
+  background-color: rgb(224, 224, 224);
 }
 
 .test-btn {

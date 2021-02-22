@@ -2,7 +2,7 @@ import NavBar from 'components/common/navbar/NavBar';
 <!--
  * @Author: your name
  * @Date: 2020-12-01 10:40:49
- * @LastEditTime: 2021-02-21 15:38:49
+ * @LastEditTime: 2021-02-22 15:33:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\04-vue-router\02_tabbar\src\views\home\Home.vue
@@ -21,110 +21,11 @@ import NavBar from 'components/common/navbar/NavBar';
     <recommend-view :recommends="recommends"></recommend-view>
     <feature-view/>
     <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
+    <!--  -->
     <!-- <goods-list :goods="goods['pop'].list"/> -->
+    <!-- 瀑布流 -->
     <water-fall :goods="goods['pop'].list"/>
-    <ul>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-      <li>列表</li>
-    </ul>
+
 
   </div>
 </template>
