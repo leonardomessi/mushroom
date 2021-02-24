@@ -2,7 +2,7 @@ import GoodsList from 'components/content/goods/GoodsList';
 <!--
  * @Author: your name
  * @Date: 2021-02-20 17:29:59
- * @LastEditTime: 2021-02-24 16:41:10
+ * @LastEditTime: 2021-02-24 19:48:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\waterfall\WaterFall.vue
@@ -40,7 +40,6 @@ export default {
       // 这在css中也是一样
       let colNums = 2;
       let waterFall = document.querySelector(".water-fall");
-      console.log(waterFall);
       let boxItems = waterFall.firstElementChild.children;
       let boxItemsLen = boxItems.length;
       let heightArr = [];
@@ -88,10 +87,12 @@ export default {
   mounted() {
     setTimeout(() => {
       this.setImgPos();
-    },300)
+    },400)
   },
   updated() {
-    
+    setTimeout(() => {
+      this.setImgPos();
+    },10)
   },
   
 };

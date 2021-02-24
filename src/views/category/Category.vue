@@ -97,9 +97,6 @@
         pullUpLoad: true
       })
 
-      bscroll.on('scroll', (position) => {
-        
-      })
 
       bscroll.on('pullingUp', () => {
         setTimeout(() => {

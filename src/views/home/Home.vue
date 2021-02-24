@@ -2,7 +2,7 @@ import NavBar from 'components/common/navbar/NavBar';
 <!--
  * @Author: your name
  * @Date: 2020-12-01 10:40:49
- * @LastEditTime: 2021-02-24 16:42:30
+ * @LastEditTime: 2021-02-24 20:20:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\04-vue-router\02_tabbar\src\views\home\Home.vue
@@ -17,23 +17,31 @@ import NavBar from 'components/common/navbar/NavBar';
       </template>
     </nav-bar>
     <!-- BetterScroll封装 -->
-    <div class="wrapper">
-      <div class="content">
+    <scroll 
+      class="content"
+      ref="scroll"
+      :probe-type="3"
+      @scroll="contentScroll"
+      :pull-up-load="true"
+      @pullingUp="loadMore">
         <!-- 把轮播图二次封装 -->
         <home-swiper :banners="banners"></home-swiper>
         <recommend-view :recommends="recommends"></recommend-view>
         <feature-view/>
-        <tab-control class="tab-control" :titles="['流行','新款','精选']" 
+        <tab-control 
+          class="tab-control" 
+          :titles="['流行','新款','精选']" 
           @tabClick="tabClick"/>
-
+  
         <!-- <goods-list :goods="showGoods"/> -->
         
-        <!-- 瀑布流 -->
+        <!-- 瀑布流布局 -->
         <water-fall >
           <goods-list-water-fall :goods="showGoods"/>
         </water-fall>
-      </div>
-    </div>
+    </scroll>
+
+    <back-top></back-top>
   </div>
 </template>
 
@@ -48,11 +56,13 @@ import FeatureView from './childComps/FeatureView';
 import TabControl from 'components/content/tabControl/TabControl';
 import GoodsList from 'components/content/goods/GoodsList';
 import GoodsListWaterFall from 'components/content/waterfall/GoodsList';
+import BackTop from 'components/content/backTop/BackTop'
 
 // 公共组件导入
 import NavBar from 'components/common/navbar/NavBar';
 import WaterFall from 'components/common/waterfall/WaterFall';
 import Scroll from 'components/common/scroll/Scroll'
+
 
 // 函数导入
 import { 
@@ -70,6 +80,7 @@ export default {
     TabControl,
     GoodsList,
     GoodsListWaterFall,
+    BackTop,
     NavBar,
     WaterFall,
     Scroll
@@ -162,11 +173,15 @@ export default {
 </script>
 
 <style type="text/css" scoped>
+  
   #home {
     /* nav脱离文档流 */
     /* 需要padding-top撑开空间 */
-    padding-top: 44px;
+    height: 100vh;
+    /* padding-top: 44px; */
+    position: relative;
     background-color: rgb(224, 224, 224);
+
   }
 
   .home_nav {
@@ -193,6 +208,18 @@ export default {
     position: sticky;
     top: 44px;
     z-index: 9;
+  }
+
+  /* 上面的scoped设置了作用域
+    这里就不会选择到子组件同名内容 */
+  .content {
+    overflow: hidden;
+
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
   }
 
 
