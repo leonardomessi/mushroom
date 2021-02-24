@@ -2,7 +2,7 @@ import NavBar from 'components/common/navbar/NavBar';
 <!--
  * @Author: your name
  * @Date: 2020-12-01 10:40:49
- * @LastEditTime: 2021-02-22 15:33:54
+ * @LastEditTime: 2021-02-24 16:42:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\04-vue-router\02_tabbar\src\views\home\Home.vue
@@ -16,17 +16,24 @@ import NavBar from 'components/common/navbar/NavBar';
         蘑 菇 街
       </template>
     </nav-bar>
-    <!-- 把轮播图二次封装 -->
-    <home-swiper :banners="banners"></home-swiper>
-    <recommend-view :recommends="recommends"></recommend-view>
-    <feature-view/>
-    <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
-    <!--  -->
-    <!-- <goods-list :goods="goods['pop'].list"/> -->
-    <!-- 瀑布流 -->
-    <water-fall :goods="goods['pop'].list"/>
+    <!-- BetterScroll封装 -->
+    <div class="wrapper">
+      <div class="content">
+        <!-- 把轮播图二次封装 -->
+        <home-swiper :banners="banners"></home-swiper>
+        <recommend-view :recommends="recommends"></recommend-view>
+        <feature-view/>
+        <tab-control class="tab-control" :titles="['流行','新款','精选']" 
+          @tabClick="tabClick"/>
 
-
+        <!-- <goods-list :goods="showGoods"/> -->
+        
+        <!-- 瀑布流 -->
+        <water-fall >
+          <goods-list-water-fall :goods="showGoods"/>
+        </water-fall>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -38,20 +45,21 @@ import RecommendView from './childComps/RecommendView';
 import FeatureView from './childComps/FeatureView';
 
 // 业务相关组件
-import TabControl from 'components/content/tabControl/TabControl.vue';
+import TabControl from 'components/content/tabControl/TabControl';
 import GoodsList from 'components/content/goods/GoodsList';
+import GoodsListWaterFall from 'components/content/waterfall/GoodsList';
 
 // 公共组件导入
-import NavBar from 'components/common/navbar/NavBar.vue';
-import WaterFall from 'components/content/waterfall/WaterFall.vue';
-
-
+import NavBar from 'components/common/navbar/NavBar';
+import WaterFall from 'components/common/waterfall/WaterFall';
+import Scroll from 'components/common/scroll/Scroll'
 
 // 函数导入
 import { 
   getHomeMultidata,
   getHomeGoods,
   } from 'network/home.js';
+
 
 export default {
   name: "Home",
@@ -61,8 +69,10 @@ export default {
     FeatureView,
     TabControl,
     GoodsList,
+    GoodsListWaterFall,
     NavBar,
-    WaterFall
+    WaterFall,
+    Scroll
   },
   data () {
     // data里的变量属于组件，具有完整生存期
@@ -74,7 +84,8 @@ export default {
         'pop': {page: 0, list: []},
         'new': {page: 0, list: []},
         'sell': {page: 0, list: []},
-      }
+      },
+      currentType: 'pop'
     }
   },
   // 组件创建完成
@@ -92,7 +103,40 @@ export default {
     this.getHomeGoods('new');
     this.getHomeGoods('sell');
   },
+  updated() {
+
+  },
+  computed: {
+    showGoods() {
+      return this.goods[this.currentType].list;
+    }
+  },
   methods: {
+
+    printMsg() {
+      let boxItems = document.querySelector(".goods")
+      console.log(boxItems);
+    },
+
+    /** 
+     * 事件监听相关
+     */ 
+    tabClick(index) {
+      switch (index) {
+        case 0:
+          this.currentType = 'pop';
+          break;
+        case 1:
+          this.currentType = 'new';
+          break;
+        case 2: 
+          this.currentType = 'sell';
+          break;
+      }
+    },
+    /** 
+     * 网络请求相关方法
+     */ 
     getHomeMultidata() {
       // getHomeMultidata()返回promise
       // 这里是异步请求

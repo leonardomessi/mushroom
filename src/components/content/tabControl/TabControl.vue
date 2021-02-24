@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-18 21:05:11
- * @LastEditTime: 2021-02-18 22:46:42
+ * @LastEditTime: 2021-02-22 17:46:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\tabControl\TabControl.vue
@@ -10,9 +10,11 @@
   <div class="tab-control">
     <!-- 不使用slot，因为样式都一样，只有文字不一样 -->
     <!-- 使用slot是因为：插入的东西可能完全不是一种标签 -->
+
+    <!-- 点击事件要传出去 -->
     <div v-for="(item,index) in titles" :key="item" 
       class="tab-control-item" :class="{active: index === currentIndex}"
-      @click="itemClick(index)">
+      @click="itemClick(index)" >
       <span>{{item}}</span>
     </div>
   </div>
@@ -37,7 +39,9 @@ export default {
   methods: {
     itemClick(index) {
       this.currentIndex = index;
-    }
+      // 子传父，抛出一个值
+      this.$emit('tabClick', index);
+    },
   },
 }
 </script>

@@ -2,7 +2,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-19 15:16:13
- * @LastEditTime: 2021-02-21 15:25:45
+ * @LastEditTime: 2021-02-23 20:04:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\goods\GoodsListItem.vue
