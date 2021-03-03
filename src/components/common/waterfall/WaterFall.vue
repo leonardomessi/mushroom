@@ -2,7 +2,7 @@ import GoodsList from 'components/content/goods/GoodsList';
 <!--
  * @Author: your name
  * @Date: 2021-02-20 17:29:59
- * @LastEditTime: 2021-02-24 19:48:49
+ * @LastEditTime: 2021-03-03 16:09:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\waterfall\WaterFall.vue
@@ -10,8 +10,10 @@ import GoodsList from 'components/content/goods/GoodsList';
 
 <template>
   <div class="water-fall">
-    <slot></slot>
-    <!-- <el-button @click="setImgPos" type="success">setImgPos</el-button> -->
+    <slot>
+      <!-- 插入条件：需要一个大的盒子，里面装着所有小盒子
+        小盒子是瀑布内容 -->
+    </slot>
   </div>
 </template>
 
@@ -52,7 +54,9 @@ export default {
 
       // value of  |   key in
       // key 的类型是 string，不是number
-      for (let key = 0, item; key < boxItemsLen; key++) {
+      let key = 0;
+      let item = null;
+      for (; key < boxItemsLen; key++) {
         item = boxItems[key];
         // 1. 第一行定位设置
         if (key < colNums) {
@@ -92,8 +96,9 @@ export default {
   updated() {
     setTimeout(() => {
       this.setImgPos();
-    },10)
+    },200)
   },
+
   
 };
 </script>

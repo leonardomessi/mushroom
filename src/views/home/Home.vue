@@ -2,7 +2,7 @@ import NavBar from 'components/common/navbar/NavBar';
 <!--
  * @Author: your name
  * @Date: 2020-12-01 10:40:49
- * @LastEditTime: 2021-02-24 20:20:45
+ * @LastEditTime: 2021-03-03 16:41:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\04-vue-router\02_tabbar\src\views\home\Home.vue
@@ -17,14 +17,12 @@ import NavBar from 'components/common/navbar/NavBar';
       </template>
     </nav-bar>
     <!-- BetterScroll封装 -->
-    <scroll 
-      class="content"
-      ref="scroll"
-      :probe-type="3"
-      @scroll="contentScroll"
-      :pull-up-load="true"
-      @pullingUp="loadMore">
-        <!-- 把轮播图二次封装 -->
+    <!-- 加 : 传值，不加就默认字符串-->
+    <scroll class="content" ref="scroll"
+      :probe-type="3" @scroll="contentScroll"
+      :pull-up-load="true" @pullingUp="loadMore">
+      <!-- 子组件发射事件，父组件接收 --> 
+        <!-- 轮播图 -->
         <home-swiper :banners="banners"></home-swiper>
         <recommend-view :recommends="recommends"></recommend-view>
         <feature-view/>
@@ -32,16 +30,15 @@ import NavBar from 'components/common/navbar/NavBar';
           class="tab-control" 
           :titles="['流行','新款','精选']" 
           @tabClick="tabClick"/>
-  
-        <!-- <goods-list :goods="showGoods"/> -->
-        
         <!-- 瀑布流布局 -->
-        <water-fall >
-          <goods-list-water-fall :goods="showGoods"/>
+        <!-- <goods-list :goods="showGoods"></goods-list> -->
+        <water-fall ref="waterFall">
+          <goods-list-water-fall :goods="showGoods" :page="goodsPage"/>
         </water-fall>
     </scroll>
-
-    <back-top></back-top>
+    <!-- 返回顶部 -->
+    <!-- 组件无法直接监听点击事件 , 要添加 native:监听组件根元素的原生事件-->
+    <back-top @click.native="backToTop" v-show="isShowBackTop"></back-top>
   </div>
 </template>
 
@@ -96,7 +93,8 @@ export default {
         'new': {page: 0, list: []},
         'sell': {page: 0, list: []},
       },
-      currentType: 'pop'
+      currentType: 'pop',
+      isShowBackTop: false,
     }
   },
   // 组件创建完成
@@ -120,15 +118,12 @@ export default {
   computed: {
     showGoods() {
       return this.goods[this.currentType].list;
+    },
+    goodsPage() {
+      return this.goods[this.currentType].page;
     }
   },
   methods: {
-
-    printMsg() {
-      let boxItems = document.querySelector(".goods")
-      console.log(boxItems);
-    },
-
     /** 
      * 事件监听相关
      */ 
@@ -145,6 +140,24 @@ export default {
           break;
       }
     },
+    backToTop() {
+      // 通过组件访问，组件的方法
+      this.$refs.scroll.scrollTo(0, 0, 300); // 传入毫秒数
+    },
+    contentScroll(position) {
+      this.isShowBackTop = (-position.y) > 1000;
+    },
+    loadMore() {
+      // 这里直接获得新的一页
+      this.getHomeGoods(this.currentType);
+
+      this.$refs.scroll.scroll.refresh();
+
+      // 由于是异步请求的数据，直接set图片位置会发现找不到图片
+      setTimeout(() => {
+        this.$refs.waterFall.setImgPos();
+      },400)
+    },
     /** 
      * 网络请求相关方法
      */ 
@@ -158,14 +171,19 @@ export default {
         this.recommends = res.data.recommend.list;
       })
     },
+    // 二次封装请求
     getHomeGoods(type) {
       // 每次请求新的一页
       const page = this.goods[type].page + 1;
+      // 这个里面的getHomeGoods是home.js里真正的请求函数
       getHomeGoods(type, page).then(res => {
         // 数组push进保存的地方， 使用spread（解构赋值语法）
         this.goods[type].list.push(...res.data.list);
-        // 页数加一
+        // 当前页数加一
         this.goods[type].page += 1;
+        
+        // 结束一次上拉，才能进行下一次
+        this.$refs.scroll.finishPullUp();
       })
     },
   }
@@ -177,7 +195,8 @@ export default {
   #home {
     /* nav脱离文档流 */
     /* 需要padding-top撑开空间 */
-    height: 100vh;
+    /* vh是设备高度 */
+    height: 100vh;  
     /* padding-top: 44px; */
     position: relative;
     background-color: rgb(224, 224, 224);
