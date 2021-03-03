@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-20 17:30:32
- * @LastEditTime: 2021-03-03 16:38:35
+ * @LastEditTime: 2021-03-03 17:59:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\waterfall\BoxItem.vue
@@ -10,7 +10,8 @@
 <template>
   <div class="goods-item">
     <div class="goods-img">
-      <img :src="goodsItem.show.img" alt="">
+      <!-- 监听图片加载 -->
+      <img :src="goodsItem.show.img" alt="" @load="imageLoad">
     </div>
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
@@ -30,7 +31,19 @@ export default {
         return {}
       }
     }
-  }
+  },
+  methods: {
+    // 通知祖父Home来调用 water-fall的setImg方法
+    // 1. 两层传递 GoodsItem -> GooodsList -> Home
+    // 2. 使用 Vuex 中间通信
+    //    设置属性，实时改变
+    
+    // 3. 事件总线
+
+    imageLoad() {
+      this.$bus.$emit('goodItemImageLoaded')
+    } 
+  },
 }
 </script>
 

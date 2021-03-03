@@ -2,7 +2,7 @@ import NavBar from 'components/common/navbar/NavBar';
 <!--
  * @Author: your name
  * @Date: 2020-12-01 10:40:49
- * @LastEditTime: 2021-03-03 16:41:07
+ * @LastEditTime: 2021-03-03 18:02:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\04-vue-router\02_tabbar\src\views\home\Home.vue
@@ -111,6 +111,13 @@ export default {
     this.getHomeGoods('pop');
     this.getHomeGoods('new');
     this.getHomeGoods('sell');
+
+    // 3. 开始监听item中图片加载完成
+
+    this.$bus.$on('goodItemImageLoaded', () => {
+      // 加载完成后让瀑布流组件来设置位置
+      this.$refs.waterFall.setImgPos();
+    })
   },
   updated() {
 
@@ -153,10 +160,6 @@ export default {
 
       this.$refs.scroll.scroll.refresh();
 
-      // 由于是异步请求的数据，直接set图片位置会发现找不到图片
-      setTimeout(() => {
-        this.$refs.waterFall.setImgPos();
-      },400)
     },
     /** 
      * 网络请求相关方法
