@@ -2,7 +2,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-19 15:16:13
- * @LastEditTime: 2021-02-23 20:04:53
+ * @LastEditTime: 2021-03-04 18:35:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\goods\GoodsListItem.vue
@@ -72,6 +72,7 @@ export default {
   }
 
   .goods-info p {
+    font-size: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     /* 规定段落中的文本不进行换行 */
