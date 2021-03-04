@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-23 19:37:10
- * @LastEditTime: 2021-03-03 16:54:40
+ * @LastEditTime: 2021-03-03 19:39:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\common\scroll\Scroll.vue
@@ -75,10 +75,10 @@ export default {
   methods: {
     // 直接来到x, y这个位置
     scrollTo(x, y, time = 300) {
-      this.scroll.scrollTo(x, y, time);
+      this.scroll && this.scroll.scrollTo(x, y, time);
     },
     finishPullUp() {
-      this.scroll.finishPullUp();
+      this.scroll && this.scroll.finishPullUp();
     },
   },
 };

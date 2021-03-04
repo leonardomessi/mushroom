@@ -2,7 +2,7 @@ import NavBar from 'components/common/navbar/NavBar';
 <!--
  * @Author: your name
  * @Date: 2020-12-01 10:40:49
- * @LastEditTime: 2021-03-03 18:02:49
+ * @LastEditTime: 2021-03-04 17:08:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\04-vue-router\02_tabbar\src\views\home\Home.vue
@@ -67,6 +67,8 @@ import {
   getHomeGoods,
   } from 'network/home.js';
 
+import {debounce} from 'common/utils.js'
+
 
 export default {
   name: "Home",
@@ -112,11 +114,18 @@ export default {
     this.getHomeGoods('new');
     this.getHomeGoods('sell');
 
-    // 3. 开始监听item中图片加载完成
+
+  },
+  mounted() {
+    // 等组件加载完了再开始，不然可能取不到 waterfall组件，无法执行
+    // 开始监听item中图片加载完成
+    // 执行频率太高 一次刷新30个
+    // 防抖包装
+    const setImg = debounce(this.$refs.waterFall.setImgPos, 0);
 
     this.$bus.$on('goodItemImageLoaded', () => {
       // 加载完成后让瀑布流组件来设置位置
-      this.$refs.waterFall.setImgPos();
+      setImg();
     })
   },
   updated() {
@@ -134,6 +143,7 @@ export default {
     /** 
      * 事件监听相关
      */ 
+
     tabClick(index) {
       switch (index) {
         case 0:
@@ -159,7 +169,6 @@ export default {
       this.getHomeGoods(this.currentType);
 
       this.$refs.scroll.scroll.refresh();
-
     },
     /** 
      * 网络请求相关方法
@@ -185,8 +194,10 @@ export default {
         // 当前页数加一
         this.goods[type].page += 1;
         
-        // 结束一次上拉，才能进行下一次
-        this.$refs.scroll.finishPullUp();
+        // 结束一次上拉，才能进行下一次（大于一时才是上拉加载，）
+        if(page > 1) {
+          this.$refs.scroll.finishPullUp();
+        }
       })
     },
   }

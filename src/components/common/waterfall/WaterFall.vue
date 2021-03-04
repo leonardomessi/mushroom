@@ -2,7 +2,7 @@ import GoodsList from 'components/content/goods/GoodsList';
 <!--
  * @Author: your name
  * @Date: 2021-02-20 17:29:59
- * @LastEditTime: 2021-03-03 16:09:00
+ * @LastEditTime: 2021-03-04 16:53:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\waterfall\WaterFall.vue
@@ -18,8 +18,6 @@ import GoodsList from 'components/content/goods/GoodsList';
 </template>
 
 <script>
-
-
 export default {
   name: "WaterFall",
   props: {
@@ -27,17 +25,19 @@ export default {
       type: Object,
       default() {
         return {};
-      }
+      },
     },
     colNums: Number,
   },
   data() {
     return {
-      
+      isMouted: false,
+      heightArr: []
     };
   },
   methods: {
     setImgPos() {
+      console.log("setPos");
       // 注意，vue组件选取不是用tagname，而是classname
       // 这在css中也是一样
       let colNums = 2;
@@ -52,8 +52,12 @@ export default {
       let boxWidth = boxItems[0].offsetWidth;
       let boxGap = (waterFallWidth - colNums * boxWidth) / (colNums + 1);
 
-      // value of  |   key in
-      // key 的类型是 string，不是number
+      // value of  |   key in  [key 的类型是 string，不是number]
+
+      // 注意到我们这里的key从 0 开始
+      // 然鹅每次刷新只需要排的是最后的 30 个（如果不是这样做累计多次，每次重排重新渲染需要时间会很长）
+      // 要做到这样，我们发现，主要是拿不到上次排好的高度
+      // 所以高度数组可以放在全局，使得每次调用都可以获得
       let key = 0;
       let item = null;
       for (; key < boxItemsLen; key++) {
@@ -87,19 +91,10 @@ export default {
       return [].indexOf.call(arr, Math.min(...arr));
     },
   },
-  // dom刷新后调用
   mounted() {
-    setTimeout(() => {
-      this.setImgPos();
-    },400)
-  },
-  updated() {
-    setTimeout(() => {
-      this.setImgPos();
-    },200)
+    this.isMouted = true;
   },
 
-  
 };
 </script>
 
