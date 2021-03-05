@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-20 17:30:32
- * @LastEditTime: 2021-03-03 19:40:59
+ * @LastEditTime: 2021-03-05 17:35:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\waterfall\BoxItem.vue
 -->
 
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="itemClick">
     <div class="goods-img">
       <!-- 监听图片加载 -->
       <img :src="goodsItem.show.img" alt="" @load="imageLoad">
@@ -42,7 +42,11 @@ export default {
 
     imageLoad() {
       this.$bus.$emit('goodItemImageLoaded')
-    } 
+    },
+    itemClick() {
+      // 传入参数 ， 动态
+      this.$router.push('/detail/' + this.goodsItem.iid);
+    }
   },
 }
 </script>

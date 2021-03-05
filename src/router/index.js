@@ -1,18 +1,33 @@
+/*
+ * @Author: your name
+ * @Date: 2021-02-01 19:51:18
+ * @LastEditTime: 2021-03-05 16:21:34
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\router\index.js
+ */
 import { createRouter, createWebHistory } from 'vue-router'
 
 const Home = () => import('../views/home/Home')
 const Category = () => import('../views/category/Category')
 const Cart = () => import('../views/cart/Cart')
 const Profile = () => import('../views/profile/Profile')
+const Detail = () => import('../views/detail/Detail')
 
 const routes = [
   {
     path: '',
-    redirect: '/home'
+    redirect: '/home',
+    meta: {
+      keepAlive: true
+    }
   },
   {
     path: '/home',
-    component: Home
+    component: Home,
+    meta: {
+      keepAlive: true
+    }
   },
   {
     path: '/category',
@@ -25,6 +40,10 @@ const routes = [
   {
     path: '/profile',
     component: Profile
+  },
+  {
+    path: '/detail/:iid',
+    component: Detail
   }
 ]
 

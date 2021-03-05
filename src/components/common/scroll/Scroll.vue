@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-23 19:37:10
- * @LastEditTime: 2021-03-04 17:22:08
+ * @LastEditTime: 2021-03-05 15:45:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\common\scroll\Scroll.vue
@@ -81,6 +81,9 @@ export default {
     finishPullUp() {
       this.scroll && this.scroll.finishPullUp();
     },
+    getScrollY() {
+      return this.scroll ? this.scroll.y : 0;
+    }
   },
 };
 </script>

@@ -2,7 +2,7 @@ import NavBar from 'components/common/navbar/NavBar';
 <!--
  * @Author: your name
  * @Date: 2020-12-01 10:40:49
- * @LastEditTime: 2021-03-04 21:24:16
+ * @LastEditTime: 2021-03-05 18:02:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\04-vue-router\02_tabbar\src\views\home\Home.vue
@@ -107,6 +107,11 @@ export default {
       isShowBackTop: false,
       tabOffsetTop: 0,
       isTabShow: false,
+      saveY: 0,
+      popPageY: 0,
+      newPageY: 0,
+      sellPageY: 0,
+      curPageY: 0,
     };
   },
   // 组件创建完成
@@ -136,6 +141,17 @@ export default {
     });
   },
   updated() {},
+  unmounted() {},
+  activated() {
+    // 这里还是有bug，流行，新款，精选的滚动条是不一样的
+    // 吸顶再次点击之后，应该要到对应的位置
+    // 这里需要存储三个值
+    this.$refs.scroll.scrollTo(0, this.saveY, 1);
+    this.$refs.scroll.scroll.refresh();
+  },
+  deactivated() {
+    this.saveY = this.$refs.scroll.getScrollY();
+  },
   computed: {
     showGoods() {
       return this.goods[this.currentType].list;
@@ -152,15 +168,26 @@ export default {
     tabClick(index) {
       switch (index) {
         case 0:
-          this.currentType = "pop";
+          {
+            this.currentType = "pop";
+            this.curPageY = this.popPageY;
+          }
           break;
         case 1:
-          this.currentType = "new";
+          {
+            this.currentType = "new";
+            this.curPageY = this.newPageY;
+          }
           break;
         case 2:
-          this.currentType = "sell";
+          {
+            this.currentType = "sell";
+            this.curPageY = this.sellPageY;
+          }
           break;
       }
+      // 跳转至对应页面该有的的位置
+      this.$refs.scroll.scrollTo(0, this.curPageY, 0);
       this.$refs.tabControlFake.currentIndex = index;
       this.$refs.tabControl.currentIndex = index;
     },
@@ -173,7 +200,17 @@ export default {
       this.isShowBackTop = -position.y > 1000;
       // 2. 决定tabControl是否吸顶（position: fixed）
       this.isTabShow = -position.y > this.tabOffsetTop;
+      // 3. 存储curY
+      if(this.currentType == "pop"){
+        this.popPageY = position.y;
+      }else if(this.currentType == "new"){
+        this.newPageY = position.y;
+      }else if(this.currentType == "sell"){
+        this.sellPageY = position.y;
+      }
+
     },
+
     loadMore() {
       // 这里直接获得新的一页
       this.getHomeGoods(this.currentType);
@@ -185,7 +222,11 @@ export default {
       // 所有组件都有一个属性 $el: 获取组件里面的元素
       // 挂载完了也不代表图片加载了，可以是一堆没有图片撑起来的组件
       // 要等图片加载完
-      this.tabOffsetTop = this.$refs.tabControlFake.$el.offsetTop;
+      console.log("swiperload");
+      this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop;
+      this.popPageY = -this.tabOffsetTop;
+      this.newPageY = -this.tabOffsetTop;
+      this.sellPageY = -this.tabOffsetTop;
     },
     /**
      * 网络请求相关方法
