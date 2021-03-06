@@ -2,14 +2,14 @@ import GoodsList from 'components/content/goods/GoodsList';
 <!--
  * @Author: your name
  * @Date: 2021-02-20 17:29:59
- * @LastEditTime: 2021-03-04 16:53:59
+ * @LastEditTime: 2021-03-06 16:43:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\waterfall\WaterFall.vue
 -->
 
 <template>
-  <div class="water-fall">
+  <div class="water-fall" ref="waterFall">
     <slot>
       <!-- 插入条件：需要一个大的盒子，里面装着所有小盒子
         小盒子是瀑布内容 -->
@@ -41,7 +41,8 @@ export default {
       // 注意，vue组件选取不是用tagname，而是classname
       // 这在css中也是一样
       let colNums = 2;
-      let waterFall = document.querySelector(".water-fall");
+      // 在vue里面少用 querySelector，而是用 ref
+      let waterFall = this.$refs.waterFall;
       let boxItems = waterFall.firstElementChild.children;
       let boxItemsLen = boxItems.length;
       let heightArr = [];

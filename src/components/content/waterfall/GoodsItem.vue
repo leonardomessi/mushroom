@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-02-20 17:30:32
- * @LastEditTime: 2021-03-05 17:35:23
+ * @LastEditTime: 2021-03-05 18:49:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Step-4-Vue\Vue\08-mall\mushroom\src\components\content\waterfall\BoxItem.vue
@@ -9,14 +9,16 @@
 
 <template>
   <div class="goods-item" @click="itemClick">
+    <div></div>
     <div class="goods-img">
       <!-- 监听图片加载 -->
-      <img :src="goodsItem.show.img" alt="" @load="imageLoad">
+      <img :src="goodsItem.show.img" alt="" @load="imageLoad" />
     </div>
     <div class="goods-info">
-      <p>{{goodsItem.title}}</p>
-      <span class="price">￥{{goodsItem.price}}</span>
-      <span class="collect">{{goodsItem.cfav}}</span>
+      <p>{{ goodsItem.title }}</p>
+      <span class="symbol">￥</span>
+      <span class="price">{{ goodsItem.price }}</span>
+      <span class="collect">{{ goodsItem.cfav }}</span>
     </div>
   </div>
 </template>
@@ -28,32 +30,30 @@ export default {
     goodsItem: {
       type: Object,
       default() {
-        return {}
-      }
-    }
+        return {};
+      },
+    },
   },
   methods: {
     // 通知祖父Home来调用 water-fall的setImg方法
     // 1. 两层传递 GoodsItem -> GooodsList -> Home
     // 2. 使用 Vuex 中间通信
     //    设置属性，实时改变
-    
+
     // 3. 事件总线
 
     imageLoad() {
-      this.$bus.$emit('goodItemImageLoaded')
+      this.$bus.$emit("goodItemImageLoaded");
     },
     itemClick() {
       // 传入参数 ， 动态
-      this.$router.push('/detail/' + this.goodsItem.iid);
-    }
+      this.$router.push("/detail/" + this.goodsItem.iid);
+    },
   },
-}
+};
 </script>
 
 <style type="text/css" scoped>
-
-
 .goods-item {
   position: absolute;
   padding-bottom: 0;
@@ -66,8 +66,6 @@ export default {
   border-radius: 5px;
   overflow: hidden;
 }
-
-
 
 .goods-item img {
   display: block;
@@ -89,6 +87,7 @@ export default {
 }
 
 .goods-item p {
+  font-size: 13px;
   overflow: hidden;
   text-overflow: ellipsis;
   /* 规定段落中的超出两行省略*/
@@ -98,8 +97,15 @@ export default {
   margin-bottom: 9%;
 }
 
+.goods-item .symbol {
+  float: left;
+  margin-top: 3%;
+  font-size: 13px;
+  color: var(--color-high-text);
+}
+
 .goods-item .price {
-  font-size: 17px;
+  font-size: 20px;
   float: left;
   color: var(--color-high-text);
 }
@@ -118,5 +124,4 @@ export default {
   height: 14px;
   background: url("~assets/img/common/collect.svg") 0 0/14px 14px;
 }
-
 </style>
